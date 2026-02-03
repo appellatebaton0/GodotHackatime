@@ -1,4 +1,4 @@
-var Utils = preload("res://addons/godot_super-wakatime/utils.gd").new()
+var Utils = preload("res://addons/godot-hackatime/utils.gd").new()
 
 func decompressor_cli(current_decompressor, platform: String, plugin_path: String) -> String:
 	"""Get path to the decompressor cli"""

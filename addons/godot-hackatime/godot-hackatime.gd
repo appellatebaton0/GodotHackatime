@@ -4,8 +4,8 @@ extends EditorPlugin
 
 #------------------------------- SETUP -------------------------------
 # Utilities
-var Utils = preload("res://addons/godot_super-wakatime/utils.gd").new()
-var DecompressorUtils = preload("res://addons/godot_super-wakatime/decompressor.gd").new()
+var Utils = preload("res://addons/godot-hackatime/utils.gd").new()
+var DecompressorUtils = preload("res://addons/godot-hackatime/decompressor.gd").new()
 
 # Paths, Urls
 const PLUGIN_PATH: String = "res://addons/godot_super-wakatime"
@@ -25,8 +25,8 @@ var wakatime_dir = null
 var wakatime_cli = null
 var decompressor_cli = null
 
-var ApiKeyPrompt: PackedScene = preload("res://addons/godot_super-wakatime/api_key_prompt.tscn")
-var Counter: PackedScene = preload("res://addons/godot_super-wakatime/counter.tscn")
+var ApiKeyPrompt: PackedScene = preload("res://addons/godot-hackatime/api_key_prompt.tscn")
+var Counter: PackedScene = preload("res://addons/godot-hackatime/counter.tscn")
 
 # Set platform
 var system_platform: String = Utils.set_platform()[0]
