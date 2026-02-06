@@ -1,6 +1,7 @@
 @tool
 extends EditorPlugin
 
+signal heartbeat_sent
 
 #------------------------------- SETUP -------------------------------
 # Utilities
@@ -39,7 +40,7 @@ const LOG_INTERVAL: int = 120000
 
 var key_get_tries: int = 0
 var counter_instance: Node
-var current_time: String = "0 hrs, 0mins"
+#var current_time: String = "0 hrs, 0mins"
 
 
 # ------------------------------- DIRECT PLUGIN FUNCTIONS ------------------------------- #
@@ -178,7 +179,9 @@ func _enable_plugin() -> void:
 	"""Setup Wakatime plugin, download dependencies if needed, initialize menu"""
 	Utils.plugin_print("Setting up %s" % get_user_agent())
 	check_dependencies()
-
+	
+	#set_process(true)
+	
 	main_screen_changed.connect(_main_screen_changed)
 	scene_saved.connect(_scene_saved)
 	resource_saved.connect(_resource_saved)
@@ -237,6 +240,8 @@ func send_heartbeat(filepath: String, catagory: String, line_num: int, cursor_po
 
 	# Send heartbeat using Wakatime CLI
 	var cmd_callable = Callable(self, "_handle_heartbeat").bind(cmd)
+	
+	heartbeat_sent.emit()
 
 	WorkerThreadPool.add_task(cmd_callable)
 	
@@ -258,32 +263,17 @@ func _handle_heartbeat(cmd_arguments) -> void:
 	# Get Wakatime CLI and try to send a heartbeat
 	if wakatime_cli == null:
 		wakatime_cli = Utils.get_waka_cli()
-		
+	
 	var output: Array[Variant] = []
 	var exit_code: int = OS.execute(wakatime_cli, cmd_arguments, output, true)
 	
-	update_today_time(wakatime_cli)
-		
 	# Inform about success or errors if user is in debug
 	if debug:
 		if exit_code == -1:
 			Utils.plugin_print("Failed to send heartbeat: %s" % output)
 		else:
 			Utils.plugin_print("Heartbeat sent: %s" % output)
-			
-func update_today_time(wakatime_cli) -> void:
-	"""Update today's time in menu"""
-	var output: Array[Variant] = []
-	# Get today's time from Wakatime CLI
-	var exit_code: int = OS.execute(wakatime_cli, ["--today"], output, true)
-	
-	# Convert it and combine different categories into
-	if exit_code == 0:
-		current_time = output[0]
-	else:
-		current_time = "Wakatime"
-	#print(current_time)
-	call_deferred("_update_panel_label", current_time, output[0])
+
 	
 func _update_panel_label(label: String, content: String):
 	"""Update bottom panel name that shows time"""

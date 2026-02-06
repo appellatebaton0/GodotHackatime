@@ -22,3 +22,7 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="WakatimePlugin"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-hackatime/plugin.cfg", "res://addons/godot-hackatime/tracker/plugin.cfg")
