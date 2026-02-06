@@ -8,7 +8,7 @@ var Utils = preload("res://addons/godot-hackatime/utils.gd").new()
 var DecompressorUtils = preload("res://addons/godot-hackatime/decompressor.gd").new()
 
 # Paths, Urls
-const PLUGIN_PATH: String = "res://addons/godot_super-wakatime"
+const PLUGIN_PATH: String = "res://addons/godot-hackatime"
 const ZIP_PATH: String = "%s/wakatime.zip" % PLUGIN_PATH
 
 const WAKATIME_URL_FMT: String = \
@@ -26,7 +26,7 @@ var wakatime_cli = null
 var decompressor_cli = null
 
 var ApiKeyPrompt: PackedScene = preload("res://addons/godot-hackatime/api_key_prompt.tscn")
-var Counter: PackedScene = preload("res://addons/godot-hackatime/counter.tscn")
+const TRACKER_PATH := &"res://addons/godot-hackatime/tracker.gd"
 
 # Set platform
 var system_platform: String = Utils.set_platform()[0]
@@ -42,16 +42,8 @@ var counter_instance: Node
 var current_time: String = "0 hrs, 0mins"
 
 
-# #------------------------------- DIRECT PLUGIN FUNCTIONS -------------------------------
-func _ready() -> void:
-	setup_plugin()
-	set_process(true)
-	
-func _exit_tree() -> void:
-	_disable_plugin()
-	set_process(false)
-	
-	
+# ------------------------------- DIRECT PLUGIN FUNCTIONS ------------------------------- #
+
 class DataSnapshot:
 	var file_path: String
 	var line_no: int 
@@ -82,7 +74,7 @@ func get_building_data(mouse_event: InputEventMouse, file_path: String = "") -> 
 	"""Generate"""
 	var snapshot = DataSnapshot.new()
 	if file_path == "":
-		if EditorInterface.get_edited_scene_root() == null:
+		if get_editor_interface().get_edited_scene_root() == null:
 			return null
 		var file = EditorInterface.get_edited_scene_root().scene_file_path
 
@@ -182,7 +174,7 @@ func _resource_saved(resource: Resource):
 	send_heartbeat(snapshot.file_path, "coding",  snapshot.line_no, snapshot.cursor_pos, snapshot.lines, true)
 
 
-func setup_plugin() -> void:
+func _enable_plugin() -> void:
 	"""Setup Wakatime plugin, download dependencies if needed, initialize menu"""
 	Utils.plugin_print("Setting up %s" % get_user_agent())
 	check_dependencies()
@@ -201,8 +193,7 @@ func setup_plugin() -> void:
 	add_tool_menu_item(API_MENU_ITEM, request_api_key)
 	add_tool_menu_item(CONFIG_MENU_ITEM, open_config)
 	
-	counter_instance = Counter.instantiate()
-	add_control_to_bottom_panel(counter_instance, current_time)
+	EditorInterface.set_plugin_enabled("godot-hackatime/tracker", true)
 
 func _disable_plugin() -> void:
 	"""Cleanup after disabling plugin"""
@@ -210,8 +201,7 @@ func _disable_plugin() -> void:
 	remove_tool_menu_item(API_MENU_ITEM)
 	remove_tool_menu_item(CONFIG_MENU_ITEM)
 	
-	remove_control_from_bottom_panel(counter_instance)
-	
+	EditorInterface.set_plugin_enabled("godot-hackatime/tracker", false)
 
 func send_heartbeat(filepath: String, catagory: String, line_num: int, cursor_pos: int, lines: int, is_write: bool) -> void:
 	"""Send Wakatimde heartbeat for the specified file"""
@@ -551,7 +541,7 @@ func get_user_agent() -> String:
 	 
 func _get_plugin_name() -> String:
 	"""Get name of the plugin"""
-	return "Godot_Super-Wakatime"
+	return "Godot-Hackatime"
 	
 func _get_plugin_version() -> String:
 	"""Get version of the plugin"""

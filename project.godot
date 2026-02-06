@@ -15,17 +15,10 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="WakatimePlugin"
+run/main_scene="uid://dnnka5th1gldj"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="WakatimePlugin"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
-
-[rendering]
-
-renderer/rendering_method="mobile"
