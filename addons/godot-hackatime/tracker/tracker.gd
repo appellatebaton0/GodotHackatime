@@ -31,13 +31,23 @@ func _disable_plugin() -> void:
 ## Every time a heartbeat is sent to Wakatime, try to update the dock.
 func _on_heartbeat_sent():
 	
-	# Curl the new time (Or at least try to).
+	# Get the start and end times needed to return the last 24h of time.
+	var datetime_dict = Time.get_datetime_dict_from_system(true)
+	datetime_dict["day"] = str(int(datetime_dict["day"]) - 1)
+	
+	var start_time = Time.get_datetime_string_from_datetime_dict(datetime_dict, false)
+	var end_time = Time.get_datetime_string_from_system(true)
+	
+	# Curl the new time.
 	var out:Array
-	var err := OS.execute("curl", ["-H", "Authorization: Bearer %s" % api_key, "https://hackatime.hackclub.com/api/v1/users/%s/stats" % slack_id], out)
+	var err := OS.execute("curl", ["-H", "Authorization: Bearer %s" % api_key, "https://hackatime.hackclub.com/api/v1/users/%s/stats?start_date=%s&end_date=%s&features=projects&filter_by_project=%s" % [slack_id, start_time, end_time, ProjectSettings.get_setting("application/config/name")]], out)
+	
+	#ProjectSettings.get_setting("application/config/name")
+	print(Time.get_datetime_dict_from_system(true))
 	
 	# https://hackatime.hackclub.com/api/v1/users/{slack_id}/stats?start_date=[start_date]&end_date=[end_date]&features=projects&filter_by_project=[project_name]&api_key=[key]
 	
-	print(Time.get_datetime_string_from_system(true))
+	print("From %s to %s" % [start_time, end_time])
 	#
 	print(out)
 
