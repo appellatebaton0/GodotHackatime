@@ -1,48 +1,45 @@
 [gd_scene format=3 uid="uid://cc00qe2ofvb5f"]
 
-[sub_resource type="Gradient" id="Gradient_s0s6l"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0u2cu"]
-gradient = SubResource("Gradient_s0s6l")
-width = 896
-height = 12
+[ext_resource type="Script" uid="uid://cg5kypdcnmgd3" path="res://addons/godot-hackatime/tracker/pie_chart.gd" id="1_0u2cu"]
+[ext_resource type="Script" uid="uid://6ol3d6ylsaoe" path="res://addons/godot-hackatime/tracker/dock.gd" id="1_m80e2"]
 
 [sub_resource type="Gradient" id="Gradient_0u2cu"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_m80e2"]
 gradient = SubResource("Gradient_0u2cu")
 
-[node name="TrackerDock" type="Panel" unique_id=122981054]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -255.0
-offset_bottom = -229.0
-grow_horizontal = 2
-grow_vertical = 2
+[sub_resource type="Gradient" id="Gradient_m80e2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x6uik"]
+gradient = SubResource("Gradient_m80e2")
+height = 32
+
+[node name="TrackerDock" type="ScrollContainer" unique_id=974832240]
+custom_minimum_size = Vector2(690, 220)
+offset_right = 690.0
+offset_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_m80e2")
+
+[node name="ScrollContainer" type="Panel" parent="." unique_id=353134129]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2017858905]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/separation = 0
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=860804631]
-layout_mode = 2
-texture = SubResource("GradientTexture2D_0u2cu")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=894416805]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer" unique_id=894416805]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer2" unique_id=972323344]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/HBoxContainer2" unique_id=972323344]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -50,52 +47,83 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="VBoxContainer" parent="HBoxContainer2/MarginContainer" unique_id=1516004986]
+[node name="HBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer" unique_id=1516004986]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1019845016]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1019845016]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 7
+theme_override_constants/separation = 4
 
-[node name="Label" type="Label" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1999452777]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1238729245]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+
+[node name="ProjectName" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3" unique_id=1999452777]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
 text = "[Project Name]"
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=770907697]
+[node name="Streak" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3" unique_id=500426614]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 16
+text = "0 Day Streak"
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=770907697]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1513546285]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=2021963720]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1513546285]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Today:     99999999h 99m 99s"
+text = "Today: "
 
-[node name="Label3" type="Label" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=789660901]
+[node name="Today" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=290458934]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 20
+text = "99999999h 99m 99s"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1469295568]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=789660901]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "All Time: 99999999h 99m 99s"
+text = "All Time:"
 
-[node name="VBoxContainer2" type="HBoxContainer" parent="HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1670264846]
+[node name="AllTime" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1018217272]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 20
+text = "99999999h 99m 99s"
+
+[node name="VBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1670264846]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=940779786]
+[node name="PieChart" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=940779786]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 texture = SubResource("GradientTexture2D_m80e2")
 expand_mode = 3
+script = ExtResource("1_0u2cu")
 
-[node name="Panel" type="Panel" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=199114785]
-custom_minimum_size = Vector2(198, 0)
+[node name="Panel" type="Panel" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=199114785]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel" unique_id=99496331]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel" unique_id=99496331]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -107,16 +135,45 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer" unique_id=833877315]
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer" unique_id=833877315]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer" unique_id=287987872]
+[node name="LanguageBox" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer" unique_id=287987872]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer2" unique_id=967677030]
+[node name="Language Entry" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1074180553]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_x6uik")
+
+[node name="Language Entry2" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=868243680]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_x6uik")
+
+[node name="Language Entry3" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1958201516]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_x6uik")
+
+[node name="Language Entry4" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=2127671161]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_x6uik")
+
+[node name="Language Entry5" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1242940398]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_x6uik")
+
+[node name="Language Entry6" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=2114619030]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_x6uik")
+
+[node name="Language Entry7" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1130584363]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_x6uik")
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/HBoxContainer2" unique_id=967677030]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -124,6 +181,94 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/MarginContainer2" unique_id=251059831]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2" unique_id=251059831]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer" unique_id=1388461558]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=813778076]
+layout_mode = 2
+text = "Goal: "
+
+[node name="GoalHours" type="LineEdit" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1612914800]
+unique_name_in_owner = true
+layout_mode = 2
+text = "500"
+placeholder_text = "Hours"
+alignment = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1827106916]
+layout_mode = 2
+text = " by "
+
+[node name="GoalDate" type="LineEdit" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=660472395]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2027-03-02T5:00:00"
+placeholder_text = "Date (YYYY-MM-DDTHH:MM:SS)"
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer" unique_id=2140193736]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="GoalTodayBar" type="ProgressBar" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1112350925]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+value = 50.0
+show_percentage = false
+
+[node name="GoalTodayLab" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1187897928]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Time Today / Goal Today (0.00h / 0.00h)"
+horizontal_alignment = 1
+
+[node name="GoalOverallBar" type="ProgressBar" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1662793691]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+value = 50.0
+show_percentage = false
+
+[node name="GoalOverallLab" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=149081312]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Time Overall / Goal Overall (0.00h / 0.00h)"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer" unique_id=905271546]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2" unique_id=1026992186]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1880482574]
+layout_mode = 2
+text = "Daily Average:"
+
+[node name="DailyAverage" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=481081536]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "99999h 99m 99s"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2" unique_id=1476061797]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=303522434]
+layout_mode = 2
+text = "Goal Date Arrives In: "
+
+[node name="GoalTimeRemaining" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=1163976272]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "99y, 99m, 99d, 99h, 99m"

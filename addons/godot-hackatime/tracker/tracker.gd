@@ -10,7 +10,7 @@ const STORED_KEYS = ["total_seconds", "languages", "daily_average", "streak"]
 
 # The bottom dock and its scene.
 @onready var DOCK_SCENE := preload("res://addons/godot-hackatime/tracker/tracker_dock.tscn")
-var Dock:Panel
+var Dock:Control
 
 # Whether the dock is currently showing the wrong time, since it won't update the label while open.
 var outdated_dock := false
