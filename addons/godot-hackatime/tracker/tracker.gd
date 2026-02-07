@@ -8,6 +8,10 @@ var base_plugin:EditorPlugin # The plugin that manages the heartbeats; ^location
 # The values stored from the available data while online.
 const STORED_KEYS = ["total_seconds", "languages", "daily_average", "streak"]
 
+# The bottom dock and its scene.
+@onready var DOCK_SCENE := preload("res://addons/godot-hackatime/tracker/tracker_dock.tscn")
+var Dock:Panel
+
 # Whether the dock is currently showing the wrong time, since it won't update the label while open.
 var outdated_dock := false
 
@@ -25,11 +29,15 @@ var offline_time    :float      # Stores the last gotten offline time, in second
 
 func _ready() -> void: 
 	
-	confirm_dependencies(true)
+	_on_heartbeat_sent()
 	
 	print("API KEY: ", api_key, " SLACK_ID: ", slack_id)
 
 func _disable_plugin() -> void:
+	
+	if Dock: 
+		remove_control_from_bottom_panel(Dock)
+		Dock.queue_free()
 	print("DISABLED")
 
 
@@ -52,10 +60,10 @@ func _on_heartbeat_sent():
 		if not err: OS.execute("curl",  ["-X", "GET", url, "-H", "accept: application/json"], out)
 		
 		if err: offline_update()   # If something goes wrong, assume the user is offline and use that.
-		else:            online_update(out) # Otherwise, do the normal time updating.
-		
-		lazy_dock_update()
-
+		else:   online_update(out) # Otherwise, do the normal time updating.
+	else: offline_update()
+	
+	dock_update()
 
 ## -- TIME UPDATES -- ##
 
@@ -83,12 +91,11 @@ func online_update(output) -> bool:
 	return true
 
 func offline_update() -> bool: 
-	
 	# Curl the offline time.
 	var out = []
 	var err := OS.execute(wakatime_cli, ["--print-offline-heartbeats", "1000"], out)
 	
-	if err: push_error("[Godot Hackatime]: Could not get offline heartbeats. Is Wakatime set up correctly?")
+	if err: push_warning("[Godot Hackatime]: Could not get offline heartbeats. Is Wakatime set up correctly?")
 	
 	if out == [""]: return false
 	
@@ -100,10 +107,22 @@ func offline_update() -> bool:
 	
 	return true
 
-
 ## Update the actual control dock.
-func lazy_dock_update():
+func dock_update():
 	
+	if not Dock:
+		Dock = DOCK_SCENE.instantiate()
+		add_control_to_bottom_panel(Dock, "_")
+	
+	print("updating")
+	print(Dock.get_parent().visible)
+	
+	if not Dock.get_parent().visible:
+		print("RE")
+		
+		
+		if Dock.get_parent(): remove_control_from_bottom_panel(Dock)
+		add_control_to_bottom_panel(Dock, unix_to_readable(online_all_time["total_seconds"]))
 	
 	
 	pass
@@ -129,7 +148,7 @@ func get_base_plugin() -> EditorPlugin:
 	return null
 
 ## Curl the Slack ID using the API key.
-func get_slack_id() -> StringName:
+func get_slack_id(warn = false) -> StringName:
 	if not api_key: return ""
 	
 	# Runs 
@@ -144,13 +163,15 @@ func get_slack_id() -> StringName:
 		
 		return dict["username"]
 	
-	if err:
-		push_error("[Godot Hackatime]: Could not get Slack ID. Is Wakatime set up correctly?")
+	if err and warn:
+		push_warning("[Godot Hackatime]: Could not get Slack ID. Is Wakatime set up correctly?")
 	
 	return ""
 
 ## If any of the required data couldn't be found, try to find it again.
-func confirm_dependencies(pushes_error := false) -> bool:
+func confirm_dependencies(warn := false) -> bool:
+	
+	
 	
 	if not project_name: project_name = ProjectSettings.get_setting("application/config/name")
 	
@@ -165,11 +186,34 @@ func confirm_dependencies(pushes_error := false) -> bool:
 			wakatime_cli = base_plugin.wakatime_cli
 		if not api_key: api_key = base_plugin.get_api_key()
 	
-	if not slack_id: slack_id = get_slack_id()
+	if not slack_id: slack_id = get_slack_id(warn)
 	
 	var confirmed = base_plugin and api_key and slack_id and project_name
 	
 	# If anything failed, and should push an error, do that.
-	if not confirmed and pushes_error: push_error("[Godot Hackatime]: Could not find a dependency. Is Wakatime set up correctly? Does your project have a name?")
+	if not confirmed and warn: push_warning("[Godot Hackatime]: Could not find a dependency. Is Wakatime set up correctly? Does your project have a name?")
 	
 	return confirmed
+
+## Turns a time amount (of seconds) into a readable string - xy, xm, xd, xh, xm, xs.
+func unix_to_readable(time:float) -> String:
+	var dict := Time.get_datetime_dict_from_unix_time(time)
+	
+	dict["year"] -= 1970
+	dict["month"] -= 1
+	dict["day"] -= 1
+	
+	var response:String
+	
+	var suffixes := {
+		"year": "y", "month": "m", "day": "d", "hour": "h", "minute": "m", "second": "s"
+	}
+	
+	for unit in suffixes.keys():
+		if dict[unit] > 0: response += str(dict[unit]) + suffixes[unit] + " "
+	
+	print(dict)
+	
+	return response
+	
+	pass
