@@ -36,7 +36,7 @@ var system_architecture: String = Utils.set_platform()[1]
 var debug: bool = false
 
 # parity with kate-wakatime
-const LOG_INTERVAL: int = 120000
+const LOG_INTERVAL: int = 12000 ## NOTE: This is 1/10th of its usual for testing purposes! SET BACK AFTERWARDS. ##
 
 var key_get_tries: int = 0
 var counter_instance: Node
@@ -99,11 +99,12 @@ var last_mouse_event: InputEventMouse
 var moved_on_edit: bool = false
 func _input(event: InputEvent) -> void:
 	"""Handle all input events"""
-
+	
 	if Time.get_ticks_msec() - last_tick_frame > LOG_INTERVAL:
-
+		
 		if tab_open == "Script":
 			if event is InputEventKey:
+				
 				var key_event = event as InputEventKey
 				if (key_event.keycode == KEY_UP   || key_event.keycode == KEY_DOWN 
 				 || key_event.keycode == KEY_LEFT || key_event.keycode == KEY_RIGHT 
@@ -175,12 +176,10 @@ func _resource_saved(resource: Resource):
 	send_heartbeat(snapshot.file_path, "coding",  snapshot.line_no, snapshot.cursor_pos, snapshot.lines, true)
 
 
-func _enable_plugin() -> void:
+func _ready() -> void:
 	"""Setup Wakatime plugin, download dependencies if needed, initialize menu"""
 	Utils.plugin_print("Setting up %s" % get_user_agent())
 	check_dependencies()
-	
-	#set_process(true)
 	
 	main_screen_changed.connect(_main_screen_changed)
 	scene_saved.connect(_scene_saved)
@@ -208,7 +207,10 @@ func _disable_plugin() -> void:
 
 func send_heartbeat(filepath: String, catagory: String, line_num: int, cursor_pos: int, lines: int, is_write: bool) -> void:
 	"""Send Wakatimde heartbeat for the specified file"""
-
+	
+	if not EditorInterface.is_plugin_enabled("godot-hackatime/tracker"):
+		EditorInterface.set_plugin_enabled("godot-hackatime/tracker", true)
+	
 	if not Utils.wakatime_cli_exists(get_waka_cli()):
 		print("Wakatime not installed!")
 		return

@@ -15,11 +15,15 @@ var outdated_dock := false
 var project_name :StringName
 var api_key      :StringName
 var slack_id     :StringName
+var wakatime_cli :StringName
 
-var online_time  :Dictionary # Stores the last gotten online time dict.
-var offline_time :Dictionary # Stores the last gotten offline time.
+var online_time     :Dictionary # Stores the last gotten online time dict. (Last 24h)
+var online_all_time :Dictionary # Stores the last gotten online time dict. (All time)
+var offline_time    :float      # Stores the last gotten offline time, in seconds.
 
-func _enable_plugin() -> void:
+## -- ENABLE / DISABLE -- ##
+
+func _ready() -> void: 
 	
 	confirm_dependencies(true)
 	
@@ -30,8 +34,7 @@ func _disable_plugin() -> void:
 
 
 ## Every time a heartbeat is sent to Wakatime, try to update the dock.
-func _on_heartbeat_sent():
-	
+func _on_heartbeat_sent(): 
 	if confirm_dependencies(): # Ensure all the dependencies exist.
 	
 		# Get the start and end times needed to return the last 24h of time.
@@ -41,34 +44,72 @@ func _on_heartbeat_sent():
 		var start_time = Time.get_datetime_string_from_datetime_dict(datetime_dict, false)
 		var end_time = Time.get_datetime_string_from_system(true)
 		
+		var url:String = "https://hackatime.hackclub.com/api/v1/users/" + slack_id + "/stats?filter_by_project=" + project_name + "&api_key=" + api_key
+		
 		# Curl the new time.
 		var out = []
-		var err := OS.execute("curl",  ["-X", "GET", "https://hackatime.hackclub.com/api/v1/users/" + slack_id + "/stats?filter_by_project=" + project_name + "&api_key=" + api_key, "-H", "accept: application/json"], out)
+		var err :=  OS.execute("curl",  ["-X", "GET", url + "&start_date=" + start_time + "&end_date=" + end_time, "-H", "accept: application/json"], out)
+		if not err: OS.execute("curl",  ["-X", "GET", url, "-H", "accept: application/json"], out)
 		
 		if err: offline_update()   # If something goes wrong, assume the user is offline and use that.
-		else:   online_update(out) # Otherwise, do the normal time updating.
+		else:            online_update(out) # Otherwise, do the normal time updating.
+		
+		lazy_dock_update()
 
-func online_update(output): 
+
+## -- TIME UPDATES -- ##
+
+func online_update(output) -> bool: 
 	
 	# If the output doesn't exist, offline update instead.
-	if output[0] == "":
+	if output[0] == "" or output[1] == "":
 		offline_update()
-		return
+		return false
 	
 	# Turn the output from an array with a string with the data into just the data.
-	output = JSON.parse_string(output[0])["data"]
+	output = [JSON.parse_string(output[0])["data"], JSON.parse_string(output[1])["data"]]
 	
-	# Take what's needed from the output, and store it in the online_time.
+	# Take what's needed from the output, and store it in the online_time vars.
 	var next_online_time:Dictionary
+	var next_online_all_time:Dictionary
 	
 	for key in STORED_KEYS:
-		next_online_time[key] = output[key]
+		next_online_time[key]     = output[0][key]
+		next_online_all_time[key] = output[1][key]
 	
-	print(next_online_time)
+	online_time = next_online_time
+	online_all_time = next_online_all_time
+	
+	return true
 
-func offline_update(): 
-	print("OFFLINE HEARTBEAT")
+func offline_update() -> bool: 
+	
+	# Curl the offline time.
+	var out = []
+	var err := OS.execute(wakatime_cli, ["--print-offline-heartbeats", "1000"], out)
+	
+	if err: push_error("[Godot Hackatime]: Could not get offline heartbeats. Is Wakatime set up correctly?")
+	
+	if out == [""]: return false
+	
+	# Parse it into a dict array.
+	var arr:Array = JSON.parse_string(out[0])
+	
+	# Update the offline time to the distance in time from the first to last offline heartbeat. (In seconds)
+	offline_time = arr.back()["time"] - arr.front()["time"]
+	
+	return true
+
+
+## Update the actual control dock.
+func lazy_dock_update():
+	
+	
+	
 	pass
+
+
+## -- MANAGING DEPENDENCIES -- ##
 
 ## Locate and return the plugin that handles the heartbeats.
 func get_base_plugin() -> EditorPlugin:
@@ -115,9 +156,14 @@ func confirm_dependencies(pushes_error := false) -> bool:
 	
 	if not base_plugin: 
 		base_plugin = get_base_plugin()
-		base_plugin.heartbeat_sent.connect(_on_heartbeat_sent)
 	
-	if not api_key: api_key = base_plugin.get_api_key()
+	# Set up everything dependent on the base plugin.
+	if base_plugin:
+		if not base_plugin.heartbeat_sent.is_connected(_on_heartbeat_sent):
+			base_plugin.heartbeat_sent.connect(_on_heartbeat_sent)
+		if not wakatime_cli:
+			wakatime_cli = base_plugin.wakatime_cli
+		if not api_key: api_key = base_plugin.get_api_key()
 	
 	if not slack_id: slack_id = get_slack_id()
 	
