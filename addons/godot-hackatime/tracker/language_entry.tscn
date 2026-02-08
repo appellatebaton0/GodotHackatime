@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://b63icdn4msi0g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aj7qs"]
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="LanguageEntry" type="HBoxContainer" unique_id=1010665274]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -9.0
+offset_bottom = 9.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 10
+
+[node name="Label" type="Label" parent="." unique_id=1428275632]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Language - 99h 99m 99s"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="." unique_id=732043754]
+custom_minimum_size = Vector2(30, 18)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_aj7qs")

@@ -25,6 +25,9 @@ var online_time     :Dictionary # Stores the last gotten online time dict. (Last
 var online_all_time :Dictionary # Stores the last gotten online time dict. (All time)
 var offline_time    :float      # Stores the last gotten offline time, in seconds.
 
+var goal_date :float # The goal date, as a unix timestamp.
+var goal_hours:float # The goal date, as a float - so decimals.
+
 ## -- ENABLE / DISABLE -- ##
 
 func _ready() -> void: 
@@ -43,6 +46,7 @@ func _disable_plugin() -> void:
 
 ## Every time a heartbeat is sent to Wakatime, try to update the dock.
 func _on_heartbeat_sent(): 
+	print("BEAT")
 	if confirm_dependencies(): # Ensure all the dependencies exist.
 	
 		# Get the start and end times needed to return the last 24h of time.
@@ -112,20 +116,14 @@ func dock_update():
 	
 	if not Dock:
 		Dock = DOCK_SCENE.instantiate()
+		Dock.Tracker = self
 		add_control_to_bottom_panel(Dock, "_")
 	
-	print("updating")
-	print(Dock.get_parent().visible)
-	
 	if not Dock.get_parent().visible:
-		print("RE")
-		
-		
 		if Dock.get_parent(): remove_control_from_bottom_panel(Dock)
 		add_control_to_bottom_panel(Dock, unix_to_readable(online_all_time["total_seconds"]))
 	
-	
-	pass
+	Dock.out_of_date = true
 
 
 ## -- MANAGING DEPENDENCIES -- ##
@@ -212,8 +210,4 @@ func unix_to_readable(time:float) -> String:
 	for unit in suffixes.keys():
 		if dict[unit] > 0: response += str(dict[unit]) + suffixes[unit] + " "
 	
-	print(dict)
-	
 	return response
-	
-	pass

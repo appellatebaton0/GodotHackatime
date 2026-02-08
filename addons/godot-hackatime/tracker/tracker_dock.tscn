@@ -10,16 +10,14 @@ colors = PackedColorArray(0, 0, 0, 0)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_m80e2"]
 gradient = SubResource("Gradient_0u2cu")
 
-[sub_resource type="Gradient" id="Gradient_m80e2"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_x6uik"]
-gradient = SubResource("Gradient_m80e2")
-height = 32
-
 [node name="TrackerDock" type="ScrollContainer" unique_id=974832240]
-custom_minimum_size = Vector2(690, 220)
-offset_right = 690.0
-offset_bottom = 220.0
+custom_minimum_size = Vector2(690, 250)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -306.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_m80e2")
@@ -54,7 +52,7 @@ size_flags_horizontal = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1019845016]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 4
+theme_override_constants/separation = 2
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1238729245]
 layout_mode = 2
@@ -105,6 +103,9 @@ size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 20
 text = "99999999h 99m 99s"
 
+[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=2030871302]
+layout_mode = 2
+
 [node name="VBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1670264846]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -145,33 +146,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Language Entry" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1074180553]
+[node name="LanguageEntryInstance" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1010665274 instance_placeholder="res://addons/godot-hackatime/tracker/language_entry.tscn"]
+unique_name_in_owner = true
 layout_mode = 2
-texture = SubResource("GradientTexture2D_x6uik")
-
-[node name="Language Entry2" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=868243680]
-layout_mode = 2
-texture = SubResource("GradientTexture2D_x6uik")
-
-[node name="Language Entry3" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1958201516]
-layout_mode = 2
-texture = SubResource("GradientTexture2D_x6uik")
-
-[node name="Language Entry4" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=2127671161]
-layout_mode = 2
-texture = SubResource("GradientTexture2D_x6uik")
-
-[node name="Language Entry5" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1242940398]
-layout_mode = 2
-texture = SubResource("GradientTexture2D_x6uik")
-
-[node name="Language Entry6" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=2114619030]
-layout_mode = 2
-texture = SubResource("GradientTexture2D_x6uik")
-
-[node name="Language Entry7" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1130584363]
-layout_mode = 2
-texture = SubResource("GradientTexture2D_x6uik")
 
 [node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/HBoxContainer2" unique_id=967677030]
 layout_mode = 2
@@ -196,7 +173,7 @@ text = "Goal: "
 [node name="GoalHours" type="LineEdit" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1612914800]
 unique_name_in_owner = true
 layout_mode = 2
-text = "500"
+tooltip_text = "The number of hours you're aiming to reach by the date, formatted as XX.XX or XX.XXh"
 placeholder_text = "Hours"
 alignment = 1
 
@@ -208,7 +185,7 @@ text = " by "
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "2027-03-02T5:00:00"
+tooltip_text = "The end date of this goal. Formatted like an ISO 8601 date/time string - see Time.get_unix_time_from_datetime_string()."
 placeholder_text = "Date (YYYY-MM-DDTHH:MM:SS)"
 alignment = 1
 
