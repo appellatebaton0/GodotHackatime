@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://b63icdn4msi0g"]
 
+[ext_resource type="Script" uid="uid://xp7o2nkmr6tu" path="res://addons/godot-hackatime/tracker/language_entry.gd" id="1_s5lbv"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aj7qs"]
 border_width_left = 4
 border_width_top = 4
@@ -23,14 +25,18 @@ offset_bottom = 9.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 10
+script = ExtResource("1_s5lbv")
 
 [node name="Label" type="Label" parent="." unique_id=1428275632]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "Language - 99h 99m 99s"
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="." unique_id=732043754]
-custom_minimum_size = Vector2(30, 18)
+[node name="Color" type="ColorPickerButton" parent="." unique_id=732043754]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 18)
 layout_mode = 2
 size_flags_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_aj7qs")
+color = Color(0.47462153, 0.076163724, 0.96757865, 1)

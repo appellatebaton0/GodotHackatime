@@ -15,7 +15,8 @@ custom_minimum_size = Vector2(690, 250)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -306.0
+offset_right = 237.0
+offset_bottom = -398.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -49,82 +50,73 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1019845016]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 2
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1238729245]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1238729245]
 layout_mode = 2
 
-[node name="ProjectName" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3" unique_id=1999452777]
+[node name="ProjectName" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1999452777]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "[Project Name]"
 
-[node name="Streak" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3" unique_id=500426614]
+[node name="Streak" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=500426614]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 16
 text = "0 Day Streak"
 
-[node name="HSeparator" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=770907697]
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=770907697]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=2021963720]
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1756675903]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=368823501]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=2021963720]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1513546285]
+[node name="Label2" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer" unique_id=1513546285]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Today: "
 
-[node name="Today" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=290458934]
+[node name="Today" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer" unique_id=290458934]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 20
 text = "99999999h 99m 99s"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1469295568]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1469295568]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=789660901]
+[node name="Label3" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer2" unique_id=789660901]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "All Time:"
 
-[node name="AllTime" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1018217272]
+[node name="AllTime" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer2" unique_id=1018217272]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 20
 text = "99999999h 99m 99s"
 
-[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=2030871302]
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1347925597]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1670264846]
+[node name="Panel" type="Panel" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=199114785]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 20
 
-[node name="PieChart" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=940779786]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-texture = SubResource("GradientTexture2D_m80e2")
-expand_mode = 3
-script = ExtResource("1_0u2cu")
-
-[node name="Panel" type="Panel" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=199114785]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel" unique_id=99496331]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel" unique_id=99496331]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -136,19 +128,27 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer" unique_id=833877315]
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer" unique_id=833877315]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LanguageBox" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer" unique_id=287987872]
+[node name="LanguageBox" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer/ScrollContainer" unique_id=287987872]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LanguageEntryInstance" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1010665274 instance_placeholder="res://addons/godot-hackatime/tracker/language_entry.tscn"]
+[node name="LanguageEntryInstance" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1010665274 instance_placeholder="res://addons/godot-hackatime/tracker/language_entry.tscn"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="PieChart" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=940779786]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+texture = SubResource("GradientTexture2D_m80e2")
+expand_mode = 3
+script = ExtResource("1_0u2cu")
 
 [node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/HBoxContainer2" unique_id=967677030]
 layout_mode = 2
@@ -225,6 +225,7 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2" unique_id=1026992186]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1880482574]

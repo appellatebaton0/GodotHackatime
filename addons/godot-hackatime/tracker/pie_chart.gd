@@ -1,8 +1,17 @@
 @tool
 extends Control
 
+var langs:Dictionary[Color, float]
+
 func _draw() -> void:
-	draw_circle_arc(size / 2, size.x / 2, 0, 90, Color.AQUA, 10)
+	var current_angle = 0
+	
+	print(langs)
+	
+	for lang in langs.keys():
+		draw_circle_arc(size / 2, size.x / 2, current_angle, current_angle + (360 * langs[lang] / 100), lang, langs[lang] / 2)
+		current_angle += (360 * langs[lang] / 100)
+
 
 func draw_circle_arc(center:Vector2, radius:float, angle_from:float, angle_to:float, color:Color, nb_points:int):
 	var points_arc = PackedVector2Array()
@@ -14,4 +23,13 @@ func draw_circle_arc(center:Vector2, radius:float, angle_from:float, angle_to:fl
 		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
 	draw_polygon(points_arc, colors)
 
-func _process(delta: float) -> void: queue_redraw()
+func _update(with:Array = []):
+	
+	print("W:", with)
+	
+	langs.clear()
+	
+	for entry in with:
+		langs[entry.color.color] = entry.percent
+	
+	queue_redraw()

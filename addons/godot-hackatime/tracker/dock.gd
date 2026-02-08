@@ -13,7 +13,7 @@ var out_of_date := true
 @onready var all_time_lab        := %AllTime
 @onready var pie_chart           := %PieChart
 @onready var language_box        := %LanguageBox
-@onready var lang_entry_scene    := %LanguageEntryInstance
+@onready var lang_entry_scene    := preload("res://addons/godot-hackatime/tracker/language_entry.tscn")
 
 # Right Side (Goal)
 @onready var goal_hours_edit     := %GoalHours
@@ -30,32 +30,70 @@ func _ready() -> void:
 	goal_date_edit .text_changed.connect(_on_goal_parameter_changed)
 	goal_hours_edit.text_changed.connect(_on_goal_parameter_changed)
 
+func _on_entry_color_changed(_to:Color): pie_chart._update(language_box.get_children())
+
 func _on_goal_parameter_changed(_to:String):
 	
 	Tracker.goal_hours = float(goal_hours_edit.text.replace("h", ""))
 	Tracker.goal_date  = Time.get_unix_time_from_datetime_string(goal_date_edit.text)
+	
+	_update_contents()
 
 func _update_contents():
 	
+	# Left side (Project)
 	project_name_lab.text = Tracker.project_name
-	streak_lab.text = str(int(Tracker.online_all_time["streak"]))
+	streak_lab.text = str(int(Tracker.online_all_time["streak"])) + "d Streak" if Tracker.online_all_time["streak"] > 0 else ""
 	
 	today_lab.text    = unix_to_hms(Tracker.online_time["total_seconds"])
 	all_time_lab.text = unix_to_hms(Tracker.online_all_time["total_seconds"])
 	
+	# Update the pie chart / language entries.
+	
+	var entries:Array[Node] = language_box.get_children()
+	var langs:Array = Tracker.online_all_time["languages"]
+	
+	while len(entries) > len(langs):
+		var cut:Node = entries.pop_front()
+		cut.queue_free()
+	
+	for i in range(len(langs)):
+		if len(entries) > i:
+			entries[i]._update(langs[i]["name"], langs[i]["percent"], langs[i]["text"])
+		else:
+			var new = lang_entry_scene.instantiate()
+			
+			language_box.add_child(new)
+			
+			new.color.color_changed.connect(_on_entry_color_changed)
+			
+			
+			new._update(langs[i]["name"], langs[i]["percent"], langs[i]["text"])
+	
+	pie_chart._update(entries)
+	
+	# Right side (Goal)
+	goal_time_remaining.text = unix_to_readable(Tracker.goal_date - Time.get_unix_time_from_system())
+	
+	var today = unix_to_hours(Tracker.online_time["total_seconds"])
+	
+	# The goal for the day would be... 
+	# time left (excluding today) = (time needed - (time so far - time today))
+	# time left / days left
+	
+	var goal_today = floor(Tracker.goal_hours / unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system()) * 100) / 100
+	
+	goal_today_lab.text = "Time Today / Goal Today (%sh / %sh)" % [today, goal_today]
+	
+	# Note that the dock is up to date now.
+	
 	out_of_date = false
-	
-	print("UPDATE")
-	
-	print(Tracker.online_time["total_seconds"], " -> ", unix_to_hms(Tracker.online_time["total_seconds"]))
-	pass
 
 # Turns a count in seconds into one in hours, minutes, seconds
-func unix_to_hms(time:float) -> String:
+func unix_to_hms(seconds:float) -> String:
 	
 	var hours   = 0
 	var minutes = 0
-	var seconds = 0
 	
 	while floor(seconds / 60) > 0:
 		minutes += 1
@@ -68,10 +106,30 @@ func unix_to_hms(time:float) -> String:
 	var response:String
 	if hours > 0:   response += " %sh" % hours
 	if minutes > 0: response += " %sm" % minutes
-	if seconds > 0: response += " %ss" % seconds
+	if seconds > 0: response += " %ss" % int(seconds)
 	
 	return response
 
+# Turns a count in seconds into one in a readable format.
+func unix_to_readable(time:float) -> String:
+	var dict := Time.get_datetime_dict_from_unix_time(time)
+	
+	dict["year"] -= 1970
+	dict["month"] -= 1
+	dict["day"] -= 1
+	
+	var response:String
+	
+	var suffixes := {
+		"year": "y", "month": "m", "day": "d", "hour": "h", "minute": "m", "second": "s"
+	}
+	
+	for unit in suffixes.keys():
+		if dict[unit] > 0: response += str(dict[unit]) + suffixes[unit] + " "
+	
+	return response
+
+func unix_to_hours(seconds:float) -> float: return floor(seconds / (60 * 60) * 100) / 100
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and out_of_date: _update_contents()

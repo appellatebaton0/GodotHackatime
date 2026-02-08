@@ -6,7 +6,7 @@ const BASE_PLUGIN_SCRIPT = &"res://addons/godot-hackatime/godot-hackatime.gd"
 var base_plugin:EditorPlugin # The plugin that manages the heartbeats; ^location
 
 # The values stored from the available data while online.
-const STORED_KEYS = ["total_seconds", "languages", "daily_average", "streak"]
+const STORED_KEYS = ["total_seconds", "languages", "streak"] #"daily_average"]
 
 # The bottom dock and its scene.
 @onready var DOCK_SCENE := preload("res://addons/godot-hackatime/tracker/tracker_dock.tscn")
@@ -46,7 +46,6 @@ func _disable_plugin() -> void:
 
 ## Every time a heartbeat is sent to Wakatime, try to update the dock.
 func _on_heartbeat_sent(): 
-	print("BEAT")
 	if confirm_dependencies(): # Ensure all the dependencies exist.
 	
 		# Get the start and end times needed to return the last 24h of time.
