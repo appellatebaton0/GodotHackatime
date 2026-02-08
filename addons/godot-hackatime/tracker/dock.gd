@@ -30,8 +30,8 @@ var out_of_date := true
 
 func _ready() -> void:
 	# Wire up the signals.
-	goal_date_edit .text_changed.connect(_on_goal_parameter_changed)
-	goal_hours_edit.text_changed.connect(_on_goal_parameter_changed)
+	goal_date_edit .text_submitted.connect(_on_goal_parameter_changed)
+	goal_hours_edit.text_submitted.connect(_on_goal_parameter_changed)
 
 func _on_entry_color_changed(_to:Color): pie_chart._update(language_box.get_children())
 
@@ -51,8 +51,8 @@ func _update_contents():
 		
 		streak_lab.text = str(streak) + "d Streak" if streak > 0 else "No Streak"
 	
-	today_lab.text    = unix_to_hms(Tracker.total_time())
-	all_time_lab.text = unix_to_hms(Tracker.today_time())
+	today_lab.text    = unix_to_hms(Tracker.today_time())
+	all_time_lab.text = unix_to_hms(Tracker.total_time())
 	
 	# Update the pie chart / language entries.
 	

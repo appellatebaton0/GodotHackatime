@@ -1,10 +1,10 @@
 func plugin_print(msg) -> void:
 	"""Print message from plugin"""
-	print("[Godot_Super-Wakatime]: %s" % msg)
+	print("[Godot Hackatime]: %s" % msg)
 	
 func plugin_print_err(err) -> void:
 	"""Inform about error from plugin"""
-	push_error("[Godot_Super-Wakatime]: %s" % err)
+	push_error("[Godot Hackatime]: %s" % err)
 
 func set_platform():
 	"""Set currently used platform"""

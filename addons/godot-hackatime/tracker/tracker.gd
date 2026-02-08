@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 	_on_heartbeat_sent()
 	
-	print("API KEY: ", api_key, " SLACK_ID: ", slack_id)
+	# print("API KEY: ", api_key, " SLACK_ID: ", slack_id)
 
 func _disable_plugin() -> void:
 	if Dock: 

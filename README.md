@@ -1,30 +1,17 @@
 <a id="readme-top"></a>
 
-<!-- SHIELDS -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 
 <!-- HEADER -->
 <br />
 <div align="center">
-    <a href="https://github.com/BudzioT/Godot_Super-Wakatime">
-        <img src="https://cloud-bo1ln2br1-hack-club-bot.vercel.app/0godotwaka22.png"  alt="Godot Wakatime"/>
-    </a>
-    <h3 align="center"> Godot Super Wakatime </h3>
+    <h3 align="center"> Godot Hackatime </h3>
     <p align="center">
-        Tool to measure time spent in loved by many people game engine - Godot
+        A fork of <a href="https://github.com/BudzioT/Godot_Super-Wakatime">Godot Super Wakatime</a>, with bonus features, for Hackatime users to measure time spent in Godot
         <br />
-        Officially approved to use in events created by Hack Club
+        !! Not yet officially approved to use in events created by Hack Club - UNDER REVIEW
         <br />
         <br />
-        <a href="https://godotengine.org/asset-library/asset/3484">Get from Asset Lib</a>
-        ·
-        <a href="https://youtu.be/rqAc-YdVXyM">View Demo</a>
-        ·
-        <a href="https://github.com/BudzioT/Godot_Super-Wakatime/issues/new">Report Bug / Request Feature</a>
+        <a href="https://github.com/appellatebaton0/GodotHackatime/issues/new">Report Bug / Request Feature</a>
     </p>
 </div>
 
@@ -52,51 +39,48 @@
 
 <!-- ABOUT -->
 ## About The Project
-<br />
+For more info on the base project, check the <a href="https://github.com/BudzioT/Godot_Super-Wakatime">original's</a> README. This is focused on what's new in relation to that.
 
-[![Product Screenshot][product-screenshot]](https://waka.hackclub.com)
+This plugin improves upon a few of the base project's features, as well as adding some of its own. Namely;
+<ul>
+<li><details>
+<summary>The dock that shows the time now has a full interface when clicked, instead of a blank panel. This dock contains;</summary>
+    <ul>
+    <li> Project Name -> What your project will show as in Hackatime
+    <li>Streak -> How many days you've been working straight
+    <li>Time Today -> How long you've spent coding in the past 24h
+    <li>All Time -> How long you've spent on the current project overall.
+    <li>Language Pie Chart / Box -> A pie chart showing how long you've spent per language, including Scene vs GDScript
+        <ul><li> You can click the colors on the key in the bottom left to change its colors as you like. They'll be removed on reopening the project.
+        </ul>
+    <li>Goal Setting -> You can set a goal of a certain amount of hours by a date via the boxes in the top left.
+        <ul>
+        <li> The Hours box takes any float number.
+        <li> The Date box takes an ISO-8601 datetime string, as per Godot's conventions - YYYY-MM-DDTHH:MM:SS (ex 2026-01-01T09:30:00)
+        </ul>
+    <li>Progress Bars -> Two progress bars showing how much time you've done towards your goal for the day, and in total.
+</details>
+<li> More accurate time display -> Shows the time for the current project (the base shows global day time)
+<li> Offline tracking display -> Still shows the time spent while offline, though it may be less accurate.
 
-This tool can successfully measure time spent building your games or apps in Godot.
-<br />
-Here's why:
-* It differentiates between switching a scene and script
-* It counts key presses as coding and mouse clicks as building scene
-* Changing scene structure results in a heartbeat sent
-* It correctly detects OS, machine name, language, editor, files
-* It can detect your cursor line and position
-* Time is split between: Building, Coding, Testing
-* In the future it will also detect testing your projects
-
-It works on both Linux and Windows, it wasn't tested on macOS yet
-<br />
-You can also see your time spent in the editor itself:
-[![Time in editor][time-screenshot]]
-
-<p align="right">(<a href="#readme-top">top</a>)</p>
 
 
-### Built Using
-I used the Ouch! CLI tool for decompression of files <br />
-This project was built using one simple, yet powerful language.<br />
-It required a lot of workarounds, but it was a pleasure to use it
-* [![GDScript][Godot]][Godot-url]
-* [![Ouch!][Ouch-shield]][Ouch-url]
-
-<p align="right">(<a href="#readme-top">top</a>)</p>
+</ul>
 
 <!-- GETTING STARTED -->
 ## Getting Started
 How to install and use this software? It's easy!
 
 ### Installation
-You can either download it from the [Godot Asset Library](https://godotengine.org/asset-library/asset/3484).
-<br />Or you can manually install it, here's how to do it!
-1. Clone the repository
-    ```sh
-    git clone https://github.com/BudzioT/Godot_Super-Wakatime.git
-    ```
+1. Get the addon file either by cloning the repository, or downloading this project as a zip file;
+    - Clone the repository -> Run in terminal:
+        ```sh
+        git clone https://github.com/appellatebaton0/GodotHackatime.git
+        ```
+    - Download as zip -> scroll to the top of the page, and click Code, then Download Zip.
 2. Go into your project
-3. Insert the entire `./addons` folder into your project `res://` directory
+3. Copy the `addons/godot-hackatime` folder into your project `res://addons` directory. 
+    - If the `res://addons` directory doesn't exist, make it.
 
 <p align="right">(<a href="#readme-top">top</a>)</p>
 
@@ -108,19 +92,12 @@ Don't know how to use this plugin? Here are the steps:
 3. if there is an issue with it, please manually create `~/.wakatime.cfg` file with these contents:
     ```sh
     [settings]
-    api_key=xxxx
-    ```
-    Where xxxx is your api key
-<br /><br />
-If you are coming from Hack Club use this:
-    ```sh
-    [settings]
     api_url = https://hackatime.hackclub.com/api/hackatime/v1
     api_key=xxxx
     ```
 4. Wakatime CLI should have been installed automatically along with Ouch! Decompression library
-5. Work on your project! You should see your results on either Wakatime or Hackatime!
-6. You can also see your time at the bottom panel
+5. Work on your project! You should see your results on Hackatime!
+6. You can also see your time via the bottom dock in the editor.
 
 <p align="right">(<a href="#readme-top">top</a>)</p>
 
@@ -130,23 +107,3 @@ If you are coming from Hack Club use this:
 Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<!-- URLS -->
-[contributors-shield]: https://img.shields.io/github/contributors/budziot/Godot_Super-Wakatime?style=for-the-badge
-[contributors-url]: https://github.com/BudzioT/Godot_Super-Wakatime/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/budziot/Godot_Super-Wakatime?style=for-the-badge
-[forks-url]: https://github.com/BudzioT/Godot_Super-Wakatime/forks
-[stars-shield]: https://img.shields.io/github/stars/budziot/Godot_Super-Wakatime?style=for-the-badge
-[stars-url]: https://github.com/BudzioT/Godot_Super-Wakatime/stargazers
-[issues-shield]: https://img.shields.io/github/issues/budziot/Godot_Super-Wakatime?style=for-the-badge
-[issues-url]: https://github.com/BudzioT/Godot_Super-Wakatime/issues
-[license-shield]: https://img.shields.io/github/license/budziot/Godot_Super-Wakatime?style=for-the-badge
-[license-url]: https://github.com/BudzioT/Godot_Super-Wakatime/blob/master/addons/godot_super-wakatime/LICENSE
-[product-screenshot]: https://cloud-j4wibbzz7-hack-club-bot.vercel.app/0image.png
-[product-logo]: https://cloud-j4wibbzz7-hack-club-bot.vercel.app/2godotwaka2.png
-[Godot]: https://img.shields.io/badge/Godot%20Engine-478CBF?logo=godotengine&logoColor=fff&style=flat
-[Godot-url]: https://godotengine.org/
-[Ouch-shield]: https://img.shields.io/badge/Ouch!-tool-blue?label=Ouch!
-[Ouch-url]: https://github.com/ouch-org/ouch
-[time-screenshot]: https://cloud-l88kldf50-hack-club-bot.vercel.app/0image.png

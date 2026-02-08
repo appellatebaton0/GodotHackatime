@@ -36,7 +36,7 @@ var system_architecture: String = Utils.set_platform()[1]
 var debug: bool = false
 
 # parity with kate-wakatime
-const LOG_INTERVAL: int = 12000 ## NOTE: This is 1/10th of its usual for testing purposes! SET BACK AFTERWARDS. ##
+const LOG_INTERVAL: int = 120000
 
 var key_get_tries: int = 0
 var counter_instance: Node
