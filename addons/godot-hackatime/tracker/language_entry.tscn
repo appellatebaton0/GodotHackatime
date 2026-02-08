@@ -39,4 +39,4 @@ custom_minimum_size = Vector2(40, 18)
 layout_mode = 2
 size_flags_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_aj7qs")
-color = Color(0.47462153, 0.076163724, 0.96757865, 1)
+color = Color(0.30505532, 0.8951247, 0.46898007, 1)

@@ -120,7 +120,7 @@ func dock_update():
 	
 	if not Dock.get_parent().visible:
 		if Dock.get_parent(): remove_control_from_bottom_panel(Dock)
-		add_control_to_bottom_panel(Dock, unix_to_readable(online_all_time["total_seconds"]))
+		add_control_to_bottom_panel(Dock, unix_to_readable(total_time()))
 	
 	Dock.out_of_date = true
 
@@ -210,3 +210,8 @@ func unix_to_readable(time:float) -> String:
 		if dict[unit] > 0: response += str(dict[unit]) + suffixes[unit] + " "
 	
 	return response
+
+# Total time in seconds.
+func total_time() -> float: return online_all_time["total_seconds"] + offline_time
+# Time today in seconds
+func today_time() -> float: return online_time["total_seconds"] + offline_time

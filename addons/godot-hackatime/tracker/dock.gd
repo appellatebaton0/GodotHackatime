@@ -45,8 +45,8 @@ func _update_contents():
 	project_name_lab.text = Tracker.project_name
 	streak_lab.text = str(int(Tracker.online_all_time["streak"])) + "d Streak" if Tracker.online_all_time["streak"] > 0 else ""
 	
-	today_lab.text    = unix_to_hms(Tracker.online_time["total_seconds"])
-	all_time_lab.text = unix_to_hms(Tracker.online_all_time["total_seconds"])
+	today_lab.text    = unix_to_hms(Tracker.total_time())
+	all_time_lab.text = unix_to_hms(Tracker.today_time())
 	
 	# Update the pie chart / language entries.
 	
@@ -75,15 +75,29 @@ func _update_contents():
 	# Right side (Goal)
 	goal_time_remaining.text = unix_to_readable(Tracker.goal_date - Time.get_unix_time_from_system())
 	
-	var today = unix_to_hours(Tracker.online_time["total_seconds"])
+	# All units in hours.
 	
-	# The goal for the day would be... 
-	# time left (excluding today) = (time needed - (time so far - time today))
-	# time left / days left
+	# Time Overall
+	var t1 = unix_to_hours(Tracker.total_time())
+	# Goal Overall
+	var g1 = Tracker.goal_hours
 	
-	var goal_today = floor(Tracker.goal_hours / unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system()) * 100) / 100
+	var p = min(24,unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system())) / unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system())
 	
-	goal_today_lab.text = "Time Today / Goal Today (%sh / %sh)" % [today, goal_today]
+	# Time Today
+	var t2 = unix_to_hours(Tracker.today_time())
+	# Goal Today
+	var g2 = floor(p * g1 * 100) / 100
+	
+	goal_overall_bar.max_value = g1
+	goal_overall_bar.value = t1
+	
+	goal_overall_lab.text = "Time Overall / Goal Overall (%sh / %sh) %s" % [t1, g1, unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system())]
+	
+	goal_today_bar.max_value = g2
+	goal_today_bar.value = t2
+	
+	goal_today_lab.text = "Time Overall / Goal Overall (%sh / %sh)" % [t2, g2]
 	
 	# Note that the dock is up to date now.
 	
