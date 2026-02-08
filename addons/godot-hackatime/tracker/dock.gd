@@ -15,6 +15,8 @@ var out_of_date := true
 @onready var language_box        := %LanguageBox
 @onready var lang_entry_scene    := preload("res://addons/godot-hackatime/tracker/language_entry.tscn")
 
+@onready var offline_mode_lab    := %OfflineMode
+
 # Right Side (Goal)
 @onready var goal_hours_edit     := %GoalHours
 @onready var goal_date_edit      := %GoalDate
@@ -24,6 +26,7 @@ var out_of_date := true
 @onready var goal_overall_lab    := %GoalOverallLab
 @onready var daily_average       := %DailyAverage
 @onready var goal_time_remaining := %GoalTimeRemaining
+
 
 func _ready() -> void:
 	# Wire up the signals.
@@ -43,34 +46,39 @@ func _update_contents():
 	
 	# Left side (Project)
 	project_name_lab.text = Tracker.project_name
-	streak_lab.text = str(int(Tracker.online_all_time["streak"])) + "d Streak" if Tracker.online_all_time["streak"] > 0 else ""
+	if Tracker.online_all_time.has("streak"):
+		var streak = int(Tracker.online_all_time["streak"])
+		
+		streak_lab.text = str(streak) + "d Streak" if streak > 0 else "No Streak"
 	
 	today_lab.text    = unix_to_hms(Tracker.total_time())
 	all_time_lab.text = unix_to_hms(Tracker.today_time())
 	
 	# Update the pie chart / language entries.
 	
-	var entries:Array[Node] = language_box.get_children()
-	var langs:Array = Tracker.online_all_time["languages"]
-	
-	while len(entries) > len(langs):
-		var cut:Node = entries.pop_front()
-		cut.queue_free()
-	
-	for i in range(len(langs)):
-		if len(entries) > i:
-			entries[i]._update(langs[i]["name"], langs[i]["percent"], langs[i]["text"])
-		else:
-			var new = lang_entry_scene.instantiate()
-			
-			language_box.add_child(new)
-			
-			new.color.color_changed.connect(_on_entry_color_changed)
-			
-			
-			new._update(langs[i]["name"], langs[i]["percent"], langs[i]["text"])
-	
-	pie_chart._update(entries)
+	if Tracker.online_all_time.has("languages"):
+		var entries:Array[Node] = language_box.get_children()
+		var langs:Array = Tracker.online_all_time["languages"]
+		
+		while len(entries) > len(langs):
+			var cut:Node = entries.pop_front()
+			cut.queue_free()
+		
+		for i in range(len(langs)):
+			if len(entries) > i:
+				entries[i]._update(langs[i]["name"], langs[i]["percent"], langs[i]["text"])
+			else:
+				var new = lang_entry_scene.instantiate()
+				
+				language_box.add_child(new)
+				
+				new.color.color_changed.connect(_on_entry_color_changed)
+				
+				
+				new._update(langs[i]["name"], langs[i]["percent"], langs[i]["text"])
+		
+		pie_chart._update(entries)
+	else: pie_chart.none_found()
 	
 	# Right side (Goal)
 	goal_time_remaining.text = unix_to_readable(Tracker.goal_date - Time.get_unix_time_from_system())
@@ -82,6 +90,7 @@ func _update_contents():
 	# Goal Overall
 	var g1 = Tracker.goal_hours
 	
+	# 24 hours over the total time left - the percentage of the total hour goal due today. 
 	var p = min(24,unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system())) / unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system())
 	
 	# Time Today
@@ -92,12 +101,15 @@ func _update_contents():
 	goal_overall_bar.max_value = g1
 	goal_overall_bar.value = t1
 	
-	goal_overall_lab.text = "Time Overall / Goal Overall (%sh / %sh) %s" % [t1, g1, unix_to_hours(Tracker.goal_date - Time.get_unix_time_from_system())]
+	goal_overall_lab.text = "Time Overall / Goal Overall (%sh / %sh)" % [t1, g1]
 	
 	goal_today_bar.max_value = g2
 	goal_today_bar.value = t2
 	
 	goal_today_lab.text = "Time Overall / Goal Overall (%sh / %sh)" % [t2, g2]
+	
+	# Update the offline warn.
+	offline_mode_lab.visible = Tracker.is_offline
 	
 	# Note that the dock is up to date now.
 	

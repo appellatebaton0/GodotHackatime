@@ -28,6 +28,8 @@ var offline_time    :float      # Stores the last gotten offline time, in second
 var goal_date :float # The goal date, as a unix timestamp.
 var goal_hours:float # The goal date, as a float - so decimals.
 
+var is_offline:bool  # The best guess as to whether the user is online or not.
+
 ## -- ENABLE / DISABLE -- ##
 
 func _ready() -> void: 
@@ -37,11 +39,11 @@ func _ready() -> void:
 	print("API KEY: ", api_key, " SLACK_ID: ", slack_id)
 
 func _disable_plugin() -> void:
-	
 	if Dock: 
 		remove_control_from_bottom_panel(Dock)
 		Dock.queue_free()
-	print("DISABLED")
+	
+	print("[Godot Hackatime]: Disabled.")
 
 
 ## Every time a heartbeat is sent to Wakatime, try to update the dock.
@@ -71,6 +73,7 @@ func _on_heartbeat_sent():
 ## -- TIME UPDATES -- ##
 
 func online_update(output) -> bool: 
+	is_offline = false
 	
 	# If the output doesn't exist, offline update instead.
 	if output[0] == "" or output[1] == "":
@@ -94,6 +97,8 @@ func online_update(output) -> bool:
 	return true
 
 func offline_update() -> bool: 
+	is_offline = true
+	
 	# Curl the offline time.
 	var out = []
 	var err := OS.execute(wakatime_cli, ["--print-offline-heartbeats", "1000"], out)
@@ -212,6 +217,10 @@ func unix_to_readable(time:float) -> String:
 	return response
 
 # Total time in seconds.
-func total_time() -> float: return online_all_time["total_seconds"] + offline_time
+func total_time() -> float: 
+	if not online_all_time.has("total_seconds"): return offline_time
+	return online_all_time["total_seconds"] + offline_time
 # Time today in seconds
-func today_time() -> float: return online_time["total_seconds"] + offline_time
+func today_time() -> float: 
+	if not online_time.has("total_seconds"): return offline_time
+	return online_time["total_seconds"] + offline_time

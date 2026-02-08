@@ -56,8 +56,21 @@ layout_mode = 2
 [node name="ProjectName" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1999452777]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "The name of this project; what it will be shown as on Hackatime."
+mouse_filter = 0
 theme_override_font_sizes/font_size = 22
 text = "[Project Name]"
+
+[node name="OfflineMode" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=361954618]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "The tracker is running in offline mode.
+In offline mode, the pie chart will not update, and some values may be inaccurate if the plugin restarts while offline. NOTE: Your time is still accurately tracked while offline, and will be synced once you're back online."
+mouse_filter = 0
+theme_override_colors/font_color = Color(0.92459685, 0.43330812, 0.17927125, 1)
+theme_override_font_sizes/font_size = 16
+text = "   Offline Mode"
+vertical_alignment = 1
 
 [node name="Streak" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=500426614]
 unique_name_in_owner = true
@@ -137,10 +150,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="LanguageEntryInstance" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer/ScrollContainer/LanguageBox" unique_id=1010665274 instance_placeholder="res://addons/godot-hackatime/tracker/language_entry.tscn"]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="PieChart" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=940779786]
 unique_name_in_owner = true
