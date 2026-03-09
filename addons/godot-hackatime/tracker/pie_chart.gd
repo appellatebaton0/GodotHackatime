@@ -30,4 +30,4 @@ func _update(with:Array = []) -> void:
 	queue_redraw()
 
 # Ran if no data was found.
-func none_found() -> void: langs = {Color.FIREBRICK: 100.0}
+func none_found() -> void: langs = {Color.FIREBRICK: 0.0}

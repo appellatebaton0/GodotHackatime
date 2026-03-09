@@ -1,0 +1,14 @@
+[gd_resource type="Theme" format=3 uid="uid://cmkp2hpa1ycuo"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6cvyc"]
+color = Color(1, 1, 1, 0.21568628)
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_1o8xd"]
+color = Color(1, 1, 1, 0.49019608)
+thickness = 5
+vertical = true
+
+[resource]
+HSeparator/styles/separator = SubResource("StyleBoxLine_6cvyc")
+HSplitContainer/styles/split_bar_background = SubResource("StyleBoxLine_1o8xd")

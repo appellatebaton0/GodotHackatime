@@ -195,7 +195,8 @@ func _ready() -> void:
 	add_tool_menu_item(API_MENU_ITEM, request_api_key)
 	add_tool_menu_item(CONFIG_MENU_ITEM, open_config)
 	
-	EditorInterface.set_plugin_enabled("godot-hackatime/tracker", true)
+	if not EditorInterface.is_plugin_enabled("godot-hackatime/tracker"):
+		EditorInterface.set_plugin_enabled("godot-hackatime/tracker", true)
 
 func _disable_plugin() -> void:
 	"""Cleanup after disabling plugin"""
@@ -203,7 +204,8 @@ func _disable_plugin() -> void:
 	remove_tool_menu_item(API_MENU_ITEM)
 	remove_tool_menu_item(CONFIG_MENU_ITEM)
 	
-	EditorInterface.set_plugin_enabled("godot-hackatime/tracker", false)
+	if EditorInterface.is_plugin_enabled("godot-hackatime/tracker"):
+		EditorInterface.set_plugin_enabled("godot-hackatime/tracker", false)
 
 func send_heartbeat(filepath: String, catagory: String, line_num: int, cursor_pos: int, lines: int, is_write: bool) -> void:
 	"""Send Wakatimde heartbeat for the specified file"""

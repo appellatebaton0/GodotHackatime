@@ -6,5 +6,3 @@
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1485348613]
 texture = ExtResource("1_mtyf4")
-
-[node name="Node2D" type="Node2D" parent="." unique_id=556067073]

@@ -33,7 +33,8 @@ func _ready() -> void:
 	goal_date_edit .text_submitted.connect(_on_goal_parameter_changed)
 	goal_hours_edit.text_submitted.connect(_on_goal_parameter_changed)
 	 
-	_update_contents()
+	if Tracker:
+		_update_contents()
 
 func _on_entry_color_changed(_to:Color): pie_chart._update(language_box.get_children())
 

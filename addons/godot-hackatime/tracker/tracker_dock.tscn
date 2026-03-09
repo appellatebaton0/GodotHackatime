@@ -6,6 +6,7 @@
 [ext_resource type="Theme" uid="uid://yoxnnvcwnt7s" path="res://addons/godot-hackatime/tracker/themes/small_text.tres" id="3_dcdxv"]
 [ext_resource type="Theme" uid="uid://cons0vyh4quuj" path="res://addons/godot-hackatime/tracker/themes/offline_notice.tres" id="3_j4sx1"]
 [ext_resource type="Theme" uid="uid://dqmbq4r6mnwcc" path="res://addons/godot-hackatime/tracker/themes/normal_text.tres" id="4_j4sx1"]
+[ext_resource type="Theme" uid="uid://cmkp2hpa1ycuo" path="res://addons/godot-hackatime/tracker/themes/separators.tres" id="5_1ca66"]
 [ext_resource type="Theme" uid="uid://cly2evythdh4o" path="res://addons/godot-hackatime/tracker/themes/mini_text.tres" id="7_j4sx1"]
 
 [sub_resource type="Gradient" id="Gradient_0u2cu"]
@@ -40,6 +41,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_1ca66")
+split_offsets = PackedInt32Array(-80)
+split_offset = -80
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VSeparator" unique_id=972323344]
 layout_mode = 2
@@ -84,6 +88,7 @@ text = "0 Day Streak"
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer" unique_id=770907697]
 layout_mode = 2
+theme = ExtResource("5_1ca66")
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer" unique_id=1756675903]
 layout_mode = 2
@@ -130,6 +135,7 @@ text = "99999999h 99m 99s"
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1347925597]
 layout_mode = 2
+theme = ExtResource("5_1ca66")
 
 [node name="Panel" type="Panel" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=199114785]
 layout_mode = 2
