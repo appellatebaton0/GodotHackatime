@@ -76,6 +76,7 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "How many days in a row you've worked on ANY project. Not just this one."
 theme_override_font_sizes/font_size = 16
 text = "0 Day Streak"
 
@@ -96,6 +97,7 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer" unique_id=1513546285]
 layout_mode = 2
+tooltip_text = "The time spent on this project today."
 theme_override_font_sizes/font_size = 20
 text = "Today: "
 
@@ -103,6 +105,7 @@ text = "Today: "
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "The time spent on this project today."
 theme_override_font_sizes/font_size = 20
 text = "99999999h 99m 99s"
 
@@ -111,6 +114,7 @@ layout_mode = 2
 
 [node name="Label3" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer2" unique_id=789660901]
 layout_mode = 2
+tooltip_text = "The time spent on this project in total."
 theme_override_font_sizes/font_size = 20
 text = "All Time:"
 
@@ -118,6 +122,7 @@ text = "All Time:"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "The time spent on this project in total."
 theme_override_font_sizes/font_size = 20
 text = "99999999h 99m 99s"
 
