@@ -110,8 +110,18 @@ func offline_update() -> bool:
 	# Parse it into a dict array.
 	var arr:Array = JSON.parse_string(out[0])
 	
-	# Update the offline time to the distance in time from the first to last offline heartbeat. (In seconds)
-	offline_time = arr.back()["time"] - arr.front()["time"]
+	# Update the offline time.
+	
+	var new_offline_time := 0.0
+	for i in range(len(arr) - 1): # For every pair of heartbeats, a and b...
+		var a = arr[i]["time"]
+		var b = arr[i + 1]["time"]
+		
+		# If they're within 130 seconds of each other (ideally 120), add to total.
+		if abs(b - a) < 130:
+			new_offline_time += abs(b - a) 
+	
+	offline_time = new_offline_time
 	
 	return true
 
