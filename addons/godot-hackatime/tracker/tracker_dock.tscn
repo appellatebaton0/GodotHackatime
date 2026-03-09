@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cg5kypdcnmgd3" path="res://addons/godot-hackatime/tracker/pie_chart.gd" id="1_0u2cu"]
 [ext_resource type="Script" uid="uid://6ol3d6ylsaoe" path="res://addons/godot-hackatime/tracker/dock.gd" id="1_m80e2"]
+[ext_resource type="Theme" uid="uid://nojpu2rnj4l5" path="res://addons/godot-hackatime/tracker/themes/header.tres" id="2_sj6un"]
+[ext_resource type="Theme" uid="uid://yoxnnvcwnt7s" path="res://addons/godot-hackatime/tracker/themes/small_text.tres" id="3_dcdxv"]
+[ext_resource type="Theme" uid="uid://cons0vyh4quuj" path="res://addons/godot-hackatime/tracker/themes/offline_notice.tres" id="3_j4sx1"]
+[ext_resource type="Theme" uid="uid://dqmbq4r6mnwcc" path="res://addons/godot-hackatime/tracker/themes/normal_text.tres" id="4_j4sx1"]
+[ext_resource type="Theme" uid="uid://cly2evythdh4o" path="res://addons/godot-hackatime/tracker/themes/mini_text.tres" id="7_j4sx1"]
 
 [sub_resource type="Gradient" id="Gradient_0u2cu"]
 offsets = PackedFloat32Array(0)
@@ -28,17 +33,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer" unique_id=894416805]
+[node name="VSeparator" type="HSplitContainer" parent="ScrollContainer" unique_id=1818324912]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/HBoxContainer2" unique_id=972323344]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VSeparator" unique_id=972323344]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -46,95 +49,94 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer" unique_id=1516004986]
+[node name="HBoxContainer" type="VBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer" unique_id=1516004986]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1238729245]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer" unique_id=1238729245]
 layout_mode = 2
 
-[node name="ProjectName" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1999452777]
+[node name="ProjectName" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1999452777]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "The name of this project; what it will be shown as on Hackatime."
 mouse_filter = 0
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("2_sj6un")
 text = "[Project Name]"
 
-[node name="OfflineMode" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=361954618]
+[node name="OfflineMode" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=361954618]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "The tracker is running in offline mode.
 In offline mode, the pie chart will not update, and some values may be inaccurate if the plugin restarts while offline. NOTE: Your time is still accurately tracked while offline, and will be synced once you're back online."
 mouse_filter = 0
-theme_override_colors/font_color = Color(0.92459685, 0.43330812, 0.17927125, 1)
-theme_override_font_sizes/font_size = 16
+theme = ExtResource("3_j4sx1")
 text = "   Offline Mode"
 vertical_alignment = 1
 
-[node name="Streak" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=500426614]
+[node name="Streak" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=500426614]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 tooltip_text = "How many days in a row you've worked on ANY project. Not just this one."
-theme_override_font_sizes/font_size = 16
+theme = ExtResource("3_dcdxv")
 text = "0 Day Streak"
 
-[node name="HSeparator" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=770907697]
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer" unique_id=770907697]
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer" unique_id=1756675903]
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer" unique_id=1756675903]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=368823501]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=368823501]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=2021963720]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=2021963720]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer" unique_id=1513546285]
+[node name="Label2" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer" unique_id=1513546285]
 layout_mode = 2
 tooltip_text = "The time spent on this project today."
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("4_j4sx1")
 text = "Today: "
 
-[node name="Today" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer" unique_id=290458934]
+[node name="Today" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer" unique_id=290458934]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 tooltip_text = "The time spent on this project today."
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("4_j4sx1")
 text = "99999999h 99m 99s"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1469295568]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1469295568]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer2" unique_id=789660901]
+[node name="Label3" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer2" unique_id=789660901]
 layout_mode = 2
 tooltip_text = "The time spent on this project in total."
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("4_j4sx1")
 text = "All Time:"
 
-[node name="AllTime" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer2" unique_id=1018217272]
+[node name="AllTime" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/HBoxContainer2" unique_id=1018217272]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 tooltip_text = "The time spent on this project in total."
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("4_j4sx1")
 text = "99999999h 99m 99s"
 
-[node name="HSeparator" type="HSeparator" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1347925597]
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1347925597]
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=199114785]
+[node name="Panel" type="Panel" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=199114785]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel" unique_id=99496331]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel" unique_id=99496331]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -146,17 +148,17 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer" unique_id=833877315]
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer" unique_id=833877315]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LanguageBox" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer/ScrollContainer" unique_id=287987872]
+[node name="LanguageBox" type="VBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer/ScrollContainer" unique_id=287987872]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PieChart" type="TextureRect" parent="ScrollContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=940779786]
+[node name="PieChart" type="TextureRect" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=940779786]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
@@ -164,7 +166,7 @@ texture = SubResource("GradientTexture2D_m80e2")
 expand_mode = 3
 script = ExtResource("1_0u2cu")
 
-[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/HBoxContainer2" unique_id=967677030]
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/VSeparator" unique_id=967677030]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -172,95 +174,101 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2" unique_id=251059831]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer2" unique_id=251059831]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer" unique_id=1388461558]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer" unique_id=1388461558]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=813778076]
+[node name="Label" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=813778076]
 layout_mode = 2
+theme = ExtResource("3_dcdxv")
 text = "Goal: "
 
-[node name="GoalHours" type="LineEdit" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1612914800]
+[node name="GoalHours" type="LineEdit" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1612914800]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "The number of hours you're aiming to reach by the date, formatted as XX.XX or XX.XXh"
+theme = ExtResource("3_dcdxv")
 placeholder_text = "Hours"
 alignment = 1
 
-[node name="Label2" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1827106916]
+[node name="Label2" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1827106916]
 layout_mode = 2
+theme = ExtResource("3_dcdxv")
 text = " by "
 
-[node name="GoalDate" type="LineEdit" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=660472395]
+[node name="GoalDate" type="LineEdit" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=660472395]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "The end date of this goal. Formatted like an ISO 8601 date/time string - see Time.get_unix_time_from_datetime_string()."
+theme = ExtResource("3_dcdxv")
 placeholder_text = "Date (YYYY-MM-DDTHH:MM:SS)"
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer" unique_id=2140193736]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer" unique_id=2140193736]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="GoalTodayBar" type="ProgressBar" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1112350925]
+[node name="GoalTodayBar" type="ProgressBar" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1112350925]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 value = 50.0
 show_percentage = false
 
-[node name="GoalTodayLab" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1187897928]
+[node name="GoalTodayLab" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1187897928]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme = ExtResource("7_j4sx1")
 text = "Time Today / Goal Today (0.00h / 0.00h)"
 horizontal_alignment = 1
 
-[node name="GoalOverallBar" type="ProgressBar" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1662793691]
+[node name="GoalOverallBar" type="ProgressBar" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=1662793691]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 value = 50.0
 show_percentage = false
 
-[node name="GoalOverallLab" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=149081312]
+[node name="GoalOverallLab" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer" unique_id=149081312]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme = ExtResource("7_j4sx1")
 text = "Time Overall / Goal Overall (0.00h / 0.00h)"
 horizontal_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer" unique_id=905271546]
+[node name="VBoxContainer2" type="VBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer" unique_id=905271546]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2" unique_id=1026992186]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer2" unique_id=1026992186]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1880482574]
+[node name="Label" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1880482574]
 layout_mode = 2
 text = "Daily Average:"
 
-[node name="DailyAverage" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=481081536]
+[node name="DailyAverage" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=481081536]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 text = "99999h 99m 99s"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2" unique_id=1476061797]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer2" unique_id=1476061797]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=303522434]
+[node name="Label" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=303522434]
 layout_mode = 2
+theme = ExtResource("3_dcdxv")
 text = "Goal Date Arrives In: "
 
-[node name="GoalTimeRemaining" type="Label" parent="ScrollContainer/HBoxContainer2/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=1163976272]
+[node name="GoalTimeRemaining" type="Label" parent="ScrollContainer/VSeparator/MarginContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=1163976272]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
+theme = ExtResource("3_dcdxv")
 text = "99y, 99m, 99d, 99h, 99m"
