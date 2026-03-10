@@ -121,9 +121,9 @@ func _update_contents():
 	
 	if Tracker.is_outdated:
 		version_lab.add_theme_color_override("font_color", Color(0.89, 0.376, 0.285, 1.0))
-		version_lab.text = "godot-hackatime " + Tracker.version + " - outdated"
+		
 		version_lab.tooltip_text = "Your version of this plugin is outdated. please visit https://github.com/appellatebaton0/GodotHackatime and download the newest version."
-
+	version_lab.text = "godot-hackatime v" + Tracker.version + " - " + ("outdated" if Tracker.is_outdated else "hackclub")
 
 # Turns a count in seconds into one in hours, minutes, seconds
 func unix_to_hms(seconds:float) -> String:
