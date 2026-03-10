@@ -14,6 +14,7 @@ var out_of_date := true
 @onready var pie_chart           := %PieChart
 @onready var language_box        := %LanguageBox
 @onready var lang_entry_scene    := preload("res://addons/godot-hackatime/tracker/language_entry.tscn")
+@onready var version_lab         := %Version
 
 @onready var offline_mode_lab    := %OfflineMode
 
@@ -117,6 +118,12 @@ func _update_contents():
 	# Note that the dock is up to date now.
 	
 	out_of_date = false
+	
+	if Tracker.is_outdated:
+		version_lab.add_theme_color_override("font_color", Color(0.89, 0.376, 0.285, 1.0))
+		version_lab.text = "godot-hackatime " + Tracker.version + " - outdated"
+		version_lab.tooltip_text = "Your version of this plugin is outdated. please visit https://github.com/appellatebaton0/GodotHackatime and download the newest version."
+
 
 # Turns a count in seconds into one in hours, minutes, seconds
 func unix_to_hms(seconds:float) -> String:

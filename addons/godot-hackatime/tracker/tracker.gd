@@ -29,14 +29,16 @@ var goal_date :float # The goal date, as a unix timestamp.
 var goal_hours:float # The goal date, as a float - so decimals.
 
 var is_offline:bool  # The best guess as to whether the user is online or not.
+var is_outdated:bool # Whether this version of the plugin is out of date or not.
+
+var version:String # The current version.
 
 ## -- ENABLE / DISABLE -- ##
 
 func _ready() -> void: 
 	
 	_on_heartbeat_sent()
-	
-	# print("API KEY: ", api_key, " SLACK_ID: ", slack_id)
+	check_outdated()
 
 func _disable_plugin() -> void:
 	if Dock: 
@@ -234,3 +236,36 @@ func total_time() -> float:
 func today_time() -> float: 
 	if not online_time.has("total_seconds"): return offline_time
 	return online_time["total_seconds"] + offline_time
+
+func check_outdated() -> void:
+	## Curl the latest version's config from Github.
+	
+	var out  = []
+	var err :=  OS.execute("curl",  ["https://api.github.com/repos/appellatebaton0/GodotHackatime/contents/addons/godot-hackatime/plugin.cfg"], out)
+	
+	if not out: return
+	
+	# Parse the output into a dictionary.
+	out = JSON.parse_string(out[0])
+	# Get the base64 encoded contents of the file.
+	out = out["content"]
+	
+	# Parse the contents into a string.
+	out = Marshalls.base64_to_utf8(out)
+	
+	# Cut everything behind the version key
+	out = out.right(len(out) - out.find("version"))
+	
+	# Cut everything after and including the second "
+	out = out.left(out.find("\"", 10))
+	# Cut out everything before and including the first "
+	out = out.right(len(out) - out.find("\"") - 1)
+	
+	## Compare the latest's version to the one in this project.
+	
+	var cfg = ConfigFile.new()
+	cfg.load("res://addons/godot-hackatime/plugin.cfg")
+	
+	version = cfg.get_value("plugin", "version")
+	
+	is_outdated = version != out

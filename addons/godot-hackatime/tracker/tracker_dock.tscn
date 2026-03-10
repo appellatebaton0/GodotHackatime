@@ -21,8 +21,8 @@ custom_minimum_size = Vector2(690, 250)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 237.0
-offset_bottom = -398.0
+offset_right = 229.0
+offset_bottom = -289.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -160,9 +160,17 @@ size_flags_horizontal = 3
 
 [node name="LanguageBox" type="VBoxContainer" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer/Panel/MarginContainer/ScrollContainer" unique_id=287987872]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Version" type="Label" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4/VBoxContainer" unique_id=1547557550]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("7_j4sx1")
+text = "godot-hackatime v1.1 - hackclub"
 
 [node name="PieChart" type="TextureRect" parent="ScrollContainer/VSeparator/MarginContainer/HBoxContainer/HBoxContainer4" unique_id=940779786]
 unique_name_in_owner = true
