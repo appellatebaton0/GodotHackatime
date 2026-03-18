@@ -2,4 +2,4 @@
 
 [resource]
 Label/colors/font_color = Color(0.9254902, 0.43137255, 0.18039216, 1)
-Label/font_sizes/font_size = 26
+Label/font_sizes/font_size = 16
